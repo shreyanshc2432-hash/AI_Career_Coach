@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  ai-career-coach:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai_career_coach_app
+    restart: unless-stopped
+    ports:
+      - "8501:8501"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - APP_ENV=production
+      - DATA_DIR=/app/data
+    volumes:
+      - career_coach_data:/app/data
+
+volumes:
+  career_coach_data:
+    driver: local
